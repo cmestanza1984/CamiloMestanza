@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sílabo: Genética de Poblaciones — UTEQ</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;430;450;480;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    :root {
+      /* Steep Design Tokens */
+      --color-ink-black: #17191c;
+      --color-paper-white: #ffffff;
+      --color-mist-gray: #f2f2f3;
+      --color-fog-white: #fafafb;
+      --color-slate-gray: #777b86;
+      --color-ash-gray: #979799;
+      --color-smoke-gray: #a3a6af;
+      --color-blush-peach: #fbe1d1;
+      --color-sienna-brown: #5d2a1a;
+
+      --font-signifier: 'Newsreader', Georgia, serif;
+      --font-sohne: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --shadow-artifact: 0 0 0 1px rgba(4, 23, 43, 0.05), 0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.04);
+    }
+
+    body {
+      background-color: var(--color-paper-white);
+      color: var(--color-ink-black);
+      font-family: var(--font-sohne);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .font-serif-signifier {
+      font-family: var(--font-signifier);
+      font-weight: 400 !important;
+    }
+
+    .bg-paper { background-color: var(--color-paper-white); }
+    .bg-mist { background-color: var(--color-mist-gray); }
+    .bg-fog { background-color: var(--color-fog-white); }
+    .bg-peach { background-color: var(--color-blush-peach); }
+
+    .text-ink { color: var(--color-ink-black); }
+    .text-slate { color: var(--color-slate-gray); }
+    .text-ash { color: var(--color-ash-gray); }
+    .text-sienna { color: var(--color-sienna-brown); }
+
+    .card-radius { border-radius: 24px; }
+    .artifact-radius { border-radius: 20px; }
+    .input-radius { border-radius: 16px; }
+
+    .artifact-shadow {
+      box-shadow: var(--shadow-artifact);
+    }
+
+    .heading-display {
+      font-family: var(--font-signifier);
+      font-weight: 400;
+      font-size: clamp(2.75rem, 6vw, 5.5rem);
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+    }
+
+    .heading-section {
+      font-family: var(--font-signifier);
+      font-weight: 400;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+    }
+
+    .btn-pill-filled {
+      background-color: var(--color-ink-black);
+      color: var(--color-paper-white);
+      border-radius: 9999px;
+      padding: 10px 24px;
+      font-size: 15px;
+      font-weight: 450;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-pill-filled:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .btn-pill-ghost {
+      background-color: transparent;
+      color: var(--color-ink-black);
+      border: 1px solid var(--color-ink-black);
+      border-radius: 9999px;
+      padding: 10px 24px;
+      font-size: 15px;
+      font-weight: 450;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-pill-ghost:hover {
+      background-color: rgba(23, 25, 28, 0.04);
+    }
+
+    .tag-category {
+      font-size: 13px;
+      color: var(--color-ash-gray);
+      font-weight: 450;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Image zoom hover effects */
+    .img-zoom-container {
+      overflow: hidden;
+      border-radius: 20px;
+    }
+    
+    .img-zoom {
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .img-zoom-container:hover .img-zoom {
+      transform: scale(1.04);
+    }
+
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white !important; color: black !important; }
+      .artifact-shadow { box-shadow: none !important; border: 1px solid #ddd !important; }
+      .bg-mist, .bg-fog { background-color: #f8f8f8 !important; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <header class="no-print sticky top-0 z-50 bg-paper/80 backdrop-blur-md border-b border-black/5 py-4 transition-all">
+    <div class="max-w-[1200px] mx-auto px-6 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="font-serif-signifier text-2xl tracking-tight text-ink">UTEQ</span>
+        <span class="text-xs px-2.5 py-1 bg-mist text-slate rounded-full font-medium">Agropecuaria</span>
+      </div>
+      <nav class="hidden md:flex items-center gap-8 text-sm font-normal text-slate">
+        <a href="#generalidades" class="hover:text-ink transition-colors">Generalidades</a>
+        <a href="#unidades" class="hover:text-ink transition-colors">Unidades</a>
+        <a href="#docente" class="hover:text-ink transition-colors">Docente</a>
+        <a href="#planificacion" class="hover:text-ink transition-colors">Planificación</a>
+        <a href="#evaluacion" class="hover:text-ink transition-colors">Evaluación</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <button onclick="window.print()" class="btn-pill-ghost py-2 px-4 text-xs">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          Imprimir / Guardar PDF
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    
+    <section class="py-12 md:py-20 bg-paper">
+      <div class="max-w-[1200px] mx-auto px-6">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-12">
+          
+          <div class="lg:col-span-7 flex flex-col gap-4">
+            <span class="tag-category">Sílabo de Asignatura · Periodo Regular 2026-2027</span>
+            <h1 class="heading-display text-ink">
+              Genética de <span class="italic">Poblaciones</span>.
+            </h1>
+            <p class="text-slate text-lg md:text-xl font-normal leading-relaxed">
+              Estructura teórica y práctica orientada al análisis de la variación genética, dinámica poblacional y mejoramiento genético en sistemas de producción agropecuarios.
+            </p>
+            <div class="flex flex-wrap items-center gap-4 pt-2">
+              <a href="#planificacion" class="btn-pill-filled">
+                Explorar Planificación Semanal
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </a>
+              <a href="#docente" class="btn-pill-ghost">
+                Contactar al Docente →
+              </a>
+            </div>
+          </div>
+
+          <!-- Hero Image Showcase -->
+          <div class="lg:col-span-5 grid grid-cols-2 gap-3">
+            <div class="img-zoom-container relative h-64 md:h-80 shadow-md">
+              <img 
+                src="https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=800&q=80" 
+                alt="Estructura de ADN y Genética Molecular" 
+                class="img-zoom w-full h-full object-cover"
+                onerror="this.onerror=null;this.src='https://placehold.co/600x800/f2f2f3/17191c?text=Gen%C3%A9tica+Molecular';"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
+                <span class="text-white text-xs font-medium tracking-wide">Secuenciación & ADN</span>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-3">
+              <div class="img-zoom-container relative h-30 md:h-38 shadow-md">
+                <img 
+                  src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=800&q=80" 
+                  alt="Sistemas Agropecuarios" 
+                  class="img-zoom w-full h-full object-cover"
+                  onerror="this.onerror=null;this.src='https://placehold.co/600x400/f2f2f3/17191c?text=Mejoramiento+Vegetal';"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-3">
+                  <span class="text-white text-[11px] font-medium">Mejoramiento Vegetal</span>
+                </div>
+              </div>
+
+              <div class="img-zoom-container relative h-30 md:h-38 shadow-md">
+                <img 
+                  src="https://images.unsplash.com/photo-1546445317-29f4545f9d52?auto=format&fit=crop&w=800&q=80" 
+                  alt="Biotecnología Animal" 
+                  class="img-zoom w-full h-full object-cover"
+                  onerror="this.onerror=null;this.src='https://placehold.co/600x400/f2f2f3/17191c?text=Biotecnolog%C3%ADa+Poblacional';"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-3">
+                  <span class="text-white text-[11px] font-medium">Poblaciones Animales</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          
+          <div class="bg-paper p-6 artifact-radius artifact-shadow border border-black/5 flex flex-col justify-between">
+            <div>
+              <span class="text-xs text-ash font-medium tracking-wide">CARGA HORARIA</span>
+              <div class="text-3xl font-medium text-ink mt-2">144.0 hrs</div>
+              <p class="text-xs text-slate mt-1">4.0 horas semanales presenciales</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-mist text-xs text-slate space-y-1">
+              <div class="flex justify-between"><span>Contacto Docente:</span> <span class="font-medium text-ink">48h</span></div>
+              <div class="flex justify-between"><span>Práctico/Exp:</span> <span class="font-medium text-ink">16h</span></div>
+              <div class="flex justify-between"><span>Autónomo:</span> <span class="font-medium text-ink">80h</span></div>
+            </div>
+          </div>
+
+          <div class="bg-paper p-6 artifact-radius artifact-shadow border border-black/5 flex flex-col justify-between">
+            <div>
+              <span class="text-xs text-ash font-medium tracking-wide">UBICACIÓN CURRICULAR</span>
+              <div class="text-3xl font-medium text-ink mt-2">5º Nivel</div>
+              <p class="text-xs text-slate mt-1">Paralelo A · Modalidad Presencial</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-mist text-xs text-slate space-y-1">
+              <div class="flex justify-between"><span>Créditos:</span> <span class="font-medium text-ink">3.0</span></div>
+              <div class="flex justify-between"><span>Unidad:</span> <span class="font-medium text-ink">Formación Prof.</span></div>
+              <div class="flex justify-between"><span>Vigencia:</span> <span class="font-medium text-ink">Abr - Oct 2026</span></div>
+            </div>
+          </div>
+
+          <div class="bg-paper p-6 artifact-radius artifact-shadow border border-black/5 flex flex-col justify-between">
+            <div>
+              <span class="text-xs text-ash font-medium tracking-wide">PRERREQUISITOS</span>
+              <div class="text-lg font-medium text-ink mt-2 leading-snug">Bioestadística & Biología Molecular</div>
+              <p class="text-xs text-slate mt-1">4to Nivel aprobado</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-mist text-xs text-slate">
+              <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-1.5"></span>
+              <span class="text-ink font-medium">Núcleo:</span> Biotecnología Aplicada
+            </div>
+          </div>
+
+          <div class="bg-paper p-6 artifact-radius artifact-shadow border border-black/5 flex flex-col justify-between">
+            <div>
+              <span class="text-xs text-ash font-medium tracking-wide">INSTITUCIÓN</span>
+              <div class="text-xl font-medium text-ink mt-2">UTEQ</div>
+              <p class="text-xs text-slate mt-1">Facultad de Ciencias Pecuarias y Biológicas</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-mist text-xs text-slate">
+              <p class="text-ash italic">"Primera universidad agropecuaria del país"</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="generalidades" class="py-16 bg-fog border-y border-black/5">
+      <div class="max-w-[1200px] mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+          
+          <div class="md:col-span-4">
+            <span class="tag-category">Contexto Académico</span>
+            <h2 class="heading-section text-ink mt-2">Descripción General</h2>
+          </div>
+
+          <div class="md:col-span-8 space-y-6">
+            <div class="bg-mist p-8 card-radius">
+              <p class="text-ink text-base md:text-lg leading-relaxed font-normal">
+                La unidad de aprendizaje <strong class="font-medium">Genética de Poblaciones</strong> se enmarca en el Modelo Educativo de la Universidad Técnica Estatal de Quevedo, conectando la teoría molecular con el análisis cuantitativo de poblaciones.
+              </p>
+              <p class="text-slate text-base mt-4 leading-relaxed">
+                La asignatura profundiza en la genética mendeliana, molecular y cuantitativa, capacitando al estudiante para aplicar conocimientos científicos en la identificación de la variabilidad génica y la adopción de programas sostenibles de mejoramiento genético animal y vegetal.
+              </p>
+            </div>
+
+            <!-- Steep Accent Card -->
+            <div class="bg-peach text-sienna p-8 card-radius relative overflow-hidden">
+              <div class="relative z-10">
+                <span class="text-xs font-semibold tracking-wider text-sienna/70 uppercase">OBJETIVO GENERAL DE LA ASIGNATURA</span>
+                <h3 class="font-serif-signifier text-2xl md:text-3xl mt-2 leading-snug">
+                  "Aplicar conceptos fundamentales de la genética de poblaciones en investigaciones científicas o en proyectos de mejoramiento continuo del sector agropecuario."
+                </h3>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="unidades" class="py-16 bg-paper border-b border-black/5">
+      <div class="max-w-[1200px] mx-auto px-6">
+        <span class="tag-category">Estructura del Conocimiento</span>
+        <h2 class="heading-section text-ink mt-1 mb-10">Unidades de Aprendizaje</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <!-- Unit 1 -->
+          <div class="bg-mist card-radius overflow-hidden border border-black/5 flex flex-col">
+            <div class="h-40 relative img-zoom-container">
+              <img 
+                src="https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=600&q=80" 
+                alt="Unidad 1: Ácidos Nucleicos" 
+                class="img-zoom w-full h-full object-cover"
+                onerror="this.onerror=null;this.src='https://placehold.co/600x400/f2f2f3/17191c?text=Unidad+1';"
+              />
+              <span class="absolute top-3 left-3 bg-paper/90 text-ink text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm">Unidad 1</span>
+            </div>
+            <div class="p-6 flex flex-col justify-between flex-grow">
+              <div>
+                <h3 class="font-serif-signifier text-2xl text-ink">Material Genético & Variación</h3>
+                <p class="text-slate text-xs mt-2 leading-relaxed">
+                  Ácidos nucleicos, síntesis de proteínas, recombinación y mecanismos de variación génica en organismos productivos.
+                </p>
+              </div>
+              <div class="mt-6 pt-4 border-t border-black/5 text-[11px] text-ash font-medium">
+                4 Semanas · 1 Práctica Experimental
+              </div>
+            </div>
+          </div>
+
+          <!-- Unit 2 -->
+          <div class="bg-mist card-radius overflow-hidden border border-black/5 flex flex-col">
+            <div class="h-40 relative img-zoom-container">
+              <img 
+                src="https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&w=600&q=80" 
+                alt="Unidad 2: Herencia Mendeliana" 
+                class="img-zoom w-full h-full object-cover"
+                onerror="this.onerror=null;this.src='https://placehold.co/600x400/f2f2f3/17191c?text=Unidad+2';"
+              />
+              <span class="absolute top-3 left-3 bg-paper/90 text-ink text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm">Unidad 2</span>
+            </div>
+            <div class="p-6 flex flex-col justify-between flex-grow">
+              <div>
+                <h3 class="font-serif-signifier text-2xl text-ink">Herencia Mendeliana</h3>
+                <p class="text-slate text-xs mt-2 leading-relaxed">
+                  Teoría cromosómica, segregación monogénica, digénica, interacciones de alelos y herencia extracromosómica.
+                </p>
+              </div>
+              <div class="mt-6 pt-4 border-t border-black/5 text-[11px] text-ash font-medium">
+                5 Semanas · Examen Parcial I
+              </div>
+            </div>
+          </div>
+
+          <!-- Unit 3 -->
+          <div class="bg-mist card-radius overflow-hidden border border-black/5 flex flex-col">
+            <div class="h-40 relative img-zoom-container">
+              <img 
+                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" 
+                alt="Unidad 3: Genética Cuantitativa" 
+                class="img-zoom w-full h-full object-cover"
+                onerror="this.onerror=null;this.src='https://placehold.co/600x400/f2f2f3/17191c?text=Unidad+3';"
+              />
+              <span class="absolute top-3 left-3 bg-paper/90 text-ink text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm">Unidad 3</span>
+            </div>
+            <div class="p-6 flex flex-col justify-between flex-grow">
+              <div>
+                <h3 class="font-serif-signifier text-2xl text-ink">Genética Cuantitativa</h3>
+                <p class="text-slate text-xs mt-2 leading-relaxed">
+                  Análisis de caracteres Métricos, estimación de la heredabilidad ($h^2$) y respuesta a la selección artificial.
+                </p>
+              </div>
+              <div class="mt-6 pt-4 border-t border-black/5 text-[11px] text-ash font-medium">
+                4 Semanas · Cálculo de Heredabilidad
+              </div>
+            </div>
+          </div>
+
+          <!-- Unit 4 -->
+          <div class="bg-mist card-radius overflow-hidden border border-black/5 flex flex-col">
+            <div class="h-40 relative img-zoom-container">
+              <img 
+                src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80" 
+                alt="Unidad 4: Dinámica Poblacional" 
+                class="img-zoom w-full h-full object-cover"
+                onerror="this.onerror=null;this.src='https://placehold.co/600x400/f2f2f3/17191c?text=Unidad+4';"
+              />
+              <span class="absolute top-3 left-3 bg-paper/90 text-ink text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm">Unidad 4</span>
+            </div>
+            <div class="p-6 flex flex-col justify-between flex-grow">
+              <div>
+                <h3 class="font-serif-signifier text-2xl text-ink">Dinámica Poblacional</h3>
+                <p class="text-slate text-xs mt-2 leading-relaxed">
+                  Fuerzas microevolutivas, acervo génico, deriva, selección natural, endogamia y equilibrio de Hardy-Weinberg.
+                </p>
+              </div>
+              <div class="mt-6 pt-4 border-t border-black/5 text-[11px] text-ash font-medium">
+                5 Semanas · Pruebas Chi-Cuadrado
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="docente" class="py-16 bg-paper">
+      <div class="max-w-[1200px] mx-auto px-6">
+        <span class="tag-category">Perfil del Docente</span>
+        <h2 class="heading-section text-ink mt-1 mb-8">Profesor Titular</h2>
+
+        <div class="bg-mist card-radius p-8 md:p-12 space-y-8">
+          <div class="flex flex-col lg:flex-row gap-8 items-start justify-between">
+            
+            <div class="flex flex-col md:flex-row gap-6 items-start">
+              
+              <!-- Docente Avatar / Photo -->
+              <div class="relative w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden shadow-md flex-shrink-0 border-2 border-paper group">
+                <img 
+                  src="foto_2.jpg" 
+                  alt="Dr. Camilo Alexander Mestanza Uquillas" 
+                  class="w-full h-full object-cover object-top hover:scale-105 transition-all duration-300"
+                  onerror="this.onerror=null;this.src='https://placehold.co/400x400/17191c/ffffff?text=Dr.+Camilo+Mestanza';"
+                />
+                <div class="absolute bottom-0 inset-x-0 bg-ink/80 backdrop-blur-xs py-1 text-center">
+                  <span class="text-[10px] text-white font-medium tracking-wider uppercase">UTEQ Docente</span>
+                </div>
+              </div>
+
+              <div class="space-y-3 max-w-xl">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="inline-flex items-center gap-2 bg-paper px-3 py-1 rounded-full text-xs font-medium text-ink shadow-xs">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Profesor Agregado 1 (Tiempo Completo)
+                  </span>
+                  <span class="bg-paper text-slate px-3 py-1 rounded-full text-xs font-medium border border-black/5">
+                    Facultad de Ciencias Pecuarias
+                  </span>
+                </div>
+
+                <h3 class="font-serif-signifier text-3xl md:text-4xl text-ink">
+                  Dr. Camilo Alexander Mestanza Uquillas
+                </h3>
+                
+                <p class="text-slate text-sm leading-relaxed">
+                  Doctor en Ciencias Agrarias y Magíster en Genética. Especialista e investigador en biotecnología molecular, genética cuantitativa, genómica de poblaciones y mejoramiento genético vegetal y animal aplicado al desarrollo agropecuario sostenible.
+                </p>
+                
+                <div class="pt-2 flex flex-wrap items-center gap-3">
+                  <a href="mailto:cmestanza@uteq.edu.ec" class="btn-pill-filled text-xs py-2 px-4">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    cmestanza@uteq.edu.ec
+                  </a>
+
+                  <a href="https://orcid.org/0000-0001-9299-170X" target="_blank" rel="noopener" class="btn-pill-ghost text-xs py-2 px-4 border-emerald-600/30 text-emerald-900 bg-emerald-50/50 hover:bg-emerald-100/50">
+                    <svg class="w-4 h-4 text-emerald-600" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c2.812 0 4.528 1.944 4.528 5.019 0 3.122-1.788 5.022-4.578 5.022h-3.85V7.416zm1.444 1.347v7.347h2.384c1.944 0 3.066-1.228 3.066-3.675 0-2.428-1.122-3.672-3.066-3.672h-2.384z"/></svg>
+                    ORCID: 0000-0001-9299-170X
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Títulos e Instrucción Formal con Números de Registro Senescyt -->
+            <div class="w-full lg:w-auto flex flex-col gap-3">
+              <div class="bg-paper p-4 rounded-2xl border border-black/5 w-full sm:w-80 shadow-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] text-ash font-medium uppercase tracking-wider">Cuarto Nivel · Doctorado</span>
+                  <span class="text-[10px] bg-mist text-slate font-mono px-2 py-0.5 rounded">2016</span>
+                </div>
+                <div class="font-medium text-ink text-sm mt-0.5">Doctor en Ciencias Agrarias</div>
+                <div class="text-xs text-slate mt-0.5">Universidad Austral de Chile</div>
+                <div class="text-[11px] text-ash mt-1 font-mono">Reg. Senescyt: 152180062</div>
+              </div>
+
+              <div class="bg-paper p-4 rounded-2xl border border-black/5 w-full sm:w-80 shadow-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] text-ash font-medium uppercase tracking-wider">Cuarto Nivel · Maestría</span>
+                  <span class="text-[10px] bg-mist text-slate font-mono px-2 py-0.5 rounded">2012</span>
+                </div>
+                <div class="font-medium text-ink text-sm mt-0.5">Magíster en Ciencias, mención Genética</div>
+                <div class="text-xs text-slate mt-0.5">Universidad Austral de Chile</div>
+                <div class="text-[11px] text-ash mt-1 font-mono">Reg. Senescyt: 8203R-12-3965</div>
+              </div>
+
+              <div class="bg-paper p-4 rounded-2xl border border-black/5 w-full sm:w-80 shadow-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] text-ash font-medium uppercase tracking-wider">Tercer Nivel · Grado</span>
+                  <span class="text-[10px] bg-mist text-slate font-mono px-2 py-0.5 rounded">2008</span>
+                </div>
+                <div class="font-medium text-ink text-sm mt-0.5">Ingeniero en Agronomía</div>
+                <div class="text-xs text-slate mt-0.5">Universidad Técnica Estatal de Quevedo</div>
+                <div class="text-[11px] text-ash mt-1 font-mono">Reg. Senescyt: 1014-08-834799</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- CV Complementary Section: Publications & AI / Pedagogical Training -->
+          <div class="pt-6 border-t border-black/10 grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <div class="bg-paper p-5 rounded-2xl border border-black/5">
+              <span class="text-xs text-ash font-medium uppercase tracking-wider flex items-center gap-1.5 mb-3">
+                <svg class="w-4 h-4 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                Investigación Reciente & Publicaciones (2024–2026)
+              </span>
+              <ul class="space-y-2.5 text-xs text-slate">
+                <li class="border-b border-mist pb-2">
+                  <strong class="text-ink block font-medium">Análisis de ADN mitocondrial en <em>Apis mellifera L.</em> mediante marcadores COI y tRNAleu–COII</strong>
+                  <span class="text-[11px] text-ash">Gene Reports (2026) · ISSN: 2452-0144</span>
+                </li>
+                <li class="border-b border-mist pb-2">
+                  <strong class="text-ink block font-medium">Estudio bioinformático comparativo de recursos genéticos en especies de <em>Herrania</em> para mejoramiento de cacao</strong>
+                  <span class="text-[11px] text-ash">Bragantia (2024) · ISSN: 0006-8705</span>
+                </li>
+                <li class="pb-1">
+                  <strong class="text-ink block font-medium">Variabilidad genotípica y respuesta fisiológica en <em>Chenopodium quinoa Willd.</em> bajo estrés salino</strong>
+                  <span class="text-[11px] text-ash">AgroLife Scientific Journal (2025) · ISSN: 2286-0126</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="bg-paper p-5 rounded-2xl border border-black/5">
+              <span class="text-xs text-ash font-medium uppercase tracking-wider flex items-center gap-1.5 mb-3">
+                <svg class="w-4 h-4 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-0a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                Innovación Docente & Capacitaciones (2025–2026)
+              </span>
+              <ul class="space-y-2.5 text-xs text-slate">
+                <li class="border-b border-mist pb-2">
+                  <strong class="text-ink block font-medium">Herramientas Bibliométricas e Inteligencia Artificial para la Escritura Científica</strong>
+                  <span class="text-[11px] text-ash">UTEQ (Abril 2026)</span>
+                </li>
+                <li class="border-b border-mist pb-2">
+                  <strong class="text-ink block font-medium">Metodologías Activas, IA e Inclusión en Educación Superior</strong>
+                  <span class="text-[11px] text-ash">UTEQ & Univ. de Viçosa (2025)</span>
+                </li>
+                <li class="pb-1">
+                  <strong class="text-ink block font-medium">Inmersión Práctica en Revisiones Sistemáticas y Metaanálisis</strong>
+                  <span class="text-[11px] text-ash">UTEQ (Septiembre 2025)</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="py-12 bg-fog border-t border-black/5">
+      <div class="max-w-[1200px] mx-auto px-6 text-xs text-slate flex flex-col md:flex-row justify-between items-center gap-4">
+        <div>
+          Elaborado por: <strong class="text-ink">Dr. Camilo Alexander Mestanza Uquillas</strong> · Aprobado por: <strong class="text-ink">Milton Fernando Cabezas Guerrero</strong> (27-04-2026)
+        </div>
+        <div>
+          Registro Oficial UTEQ — Fecha de emisión: 2026-09-30
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-paper border-t border-black/5 py-8">
+    <div class="max-w-[1200px] mx-auto px-6 flex flex-col sm:flex-row items-center justify-between text-xs text-ash gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-serif-signifier text-lg text-ink">UTEQ</span>
+        <span>— Universidad Técnica Estatal de Quevedo</span>
+      </div>
+      <div>
+        Diseñado bajo la guía estética <strong class="text-slate">Steep Style Reference</strong>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function filterUnit(unit, event) {
+      const cards = document.querySelectorAll('.week-card');
+      const buttons = document.querySelectorAll('.unit-btn');
+
+      if (buttons.length) {
+        buttons.forEach(btn => {
+          btn.classList.remove('btn-pill-filled');
+          btn.classList.add('btn-pill-ghost');
+        });
+      }
+
+      if (event && event.currentTarget) {
+        event.currentTarget.classList.remove('btn-pill-ghost');
+        event.currentTarget.classList.add('btn-pill-filled');
+      }
+
+      cards.forEach(card => {
+        if (unit === 'ALL' || card.getAttribute('data-unit') === unit) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('searchInput');
+      if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+          const query = e.target.value.toLowerCase();
+          const cards = document.querySelectorAll('.week-card');
+
+          cards.forEach(card => {
+            const searchText = (card.getAttribute('data-search') || '').toLowerCase();
+            const cardContent = card.innerText.toLowerCase();
+
+            if (searchText.includes(query) || cardContent.includes(query)) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
